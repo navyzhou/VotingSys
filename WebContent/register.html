@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>在线投票系统</title>
+<link type="image/x-icon" href="images/yc.png" rel="shortcut icon"/>
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+function userReg(){
+	var usid=$.trim( $("#usid").val() );
+	var uname=$.trim( $("#uname").val() );
+	var pwd=$.trim( $("#pwd").val() );
+	var againPwd=$.trim( $("#againPwd").val() );
+	if(usid=="" || uname=="" || pwd==""){
+		return;
+	}
+	
+	if(pwd!=againPwd){
+		return;
+	}
+	
+	$.post("userInfo",{op:"userReg",usid:usid,uname:uname,pwd:pwd},function(data){
+		data=parseInt( $.trim(data) );
+		if(data!=0){
+			location.href="reg_success.html";
+		}else{
+			alert("注册失败，请稍后重试...");
+		}
+	},"text");
+}
+
+</script>
+</head>
+<body>
+<div id="header" class="wrap">
+	<img src="images/logo.gif" />
+</div>
+<div id="navbar" class="wrap">
+	<div class="search">
+	<!--  
+		<form method="get" action="index.html">
+			<input type="text" name="keywords" class="input-text" /><input type="submit" name="submit" class="input-button" value="" />
+		</form>
+	-->	
+	</div>
+</div>
+<div id="register" class="box">
+	<h2>新用户注册</h2>
+	<div class="content">
+	   <form method="post" action="#">
+			<dl>
+				<dt>用户ID：</dt>
+				<dd><input type="text" class="input-text" name="userId" id="usid" value=""/></dd>
+				<dt>用户名：</dt>
+				<dd><input type="text" class="input-text" name="userName" id="uname" value=""/></dd>
+				<dt>密码：</dt>
+				<dd><input type="password" class="input-text" name="password" id="pwd" value=""/></dd>
+				<dt>确认密码：</dt>
+				<dd><input type="password" class="input-text" name="confirmPassword"  id="againPwd" value=""/></dd>
+				<dt></dt>
+				<dd><input type="button" class="input-button" name="submit" onclick="userReg()"/></dd>
+			</dl>
+		</form>
+		<div class="error"></div>
+		<div class="error"></div>
+	</div>
+</div>
+<div id="footer" class="wrap">
+	源辰信息 &copy; 版权所有
+</div>
+</body>
+</html>
